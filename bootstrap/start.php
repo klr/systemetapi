@@ -29,7 +29,7 @@ $app->redirectIfTrailingSlash();
 $env = $app->detectEnvironment(array(
 
 	'local'      => array('localhost'),
-    'production' => array('cartman')
+    'production' => array('cartman', 'systemetapi.se')
 
 ));
 
