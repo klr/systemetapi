@@ -27,12 +27,12 @@ class ProductController extends BaseController
 
         // Ecological
         if ($ecological = Input::get('ecological')) {
-            $product = $product->where('ecological', $ecological);
+            $product = $product->where('ecological', (bool) $ecological);
         }
 
         // Koscher
         if ($koscher = Input::get('koscher')) {
-            $product = $product->where('koscher', $koscher);
+            $product = $product->where('koscher', (bool) $koscher);
         }
 
         // Order by
