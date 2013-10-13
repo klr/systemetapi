@@ -78,6 +78,26 @@ class ProductController extends BaseController
             }
         }
 
+        if ($country = Input::get('country')) {
+            $country = explode(',', $country);
+
+            foreach ($country as $key => $val) {
+                $country[$key] = (int) $val;
+            }
+
+            $product = $product->whereIn('country_id', $country);
+        }
+
+        if ($origin = Input::get('origin')) {
+            $origin = explode(',', $origin);
+
+            foreach ($origin as $key => $val) {
+                $origin[$key] = (int) $val;
+            }
+
+            $product = $product->whereIn('origin_id', $origin);
+        }
+
         // Create response
         $response = Response::json($product
             ->with(['tags', 'country', 'origin'])
