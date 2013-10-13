@@ -20,6 +20,12 @@ class Product extends Eloquent
     protected $guarded = [];
 
     /**
+     * Hidden
+     * @var array
+     */
+    protected $hidden = ['updated_at', 'created_at'];
+
+    /**
      * Get volume attribute
      * @param  string $value
      * @return float
@@ -111,6 +117,24 @@ class Product extends Eloquent
     public function tags()
     {
         return $this->belongsToMany('Tag', 'product_tag');
+    }
+
+    /**
+     * Country
+     * @return Country
+     */
+    public function country()
+    {
+        return $this->belongsTo('Country');
+    }
+
+    /**
+     * Origin
+     * @return Origin
+     */
+    public function origin()
+    {
+        return $this->belongsTo('Origin');
     }
 
     /**

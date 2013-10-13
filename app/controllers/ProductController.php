@@ -80,7 +80,7 @@ class ProductController extends BaseController
 
         // Create response
         $response = Response::json($product
-            ->with('tags')
+            ->with(['tags', 'country', 'origin'])
             ->skip(Input::get('offset', 0))
             ->take(Input::get('limit', 50))
             ->get());

@@ -37,7 +37,7 @@ class ImportAssortmentCommand extends Command {
      */
     public function fire()
     {
-        ini_set('memory_limit', '256M');
+        ini_set('memory_limit', '512M');
 
         if (App::environment() == 'development') {
             $xml = simplexml_load_file('Alla+Artiklar.xml');
@@ -68,26 +68,82 @@ class ImportAssortmentCommand extends Command {
             $exists = Product::where('product_number', $row->nr)->first();
 
             if (!empty($exists)) {
+                $product = $exists;
+
                 foreach ($data as $key => $val) {
                     $exists->$key = $val;
                 }
 
                 $exists->save();
-                continue;
+            } else {
+                $product = Product::create($data);
+                $tags = Tag::mapping((string) $row->Varugrupp);
+
+                if (!empty($tags)) {
+                    $product->tag($tags);
+                }
             }
 
-            $product = Product::create($data);
-            $tags = Tag::mapping((string) $row->Varugrupp);
-
-            if (!empty($tags)) {
-                $product->tag($tags);
-            }
+            $this->mapCountry($product, $row->Ursprunglandnamn);
+            $this->mapOrigin($product, $row->Ursprung);
 
             // Clean up
             unset($product, $tags, $data);
         }
 
         $this->info('Imported ' . $numProducts . ' products');
+    }
+
+    /**
+     * Map country
+     * @param  Product $product
+     * @param  string  $countryName
+     * @return void
+     */
+    private function mapCountry(Product $product, $countryName)
+    {
+        $countryName = trim($countryName);
+
+        if (empty($countryName)) {
+            return;
+        }
+
+        $country = Country::where('name', $countryName)->first();
+
+        if (empty($country)) {
+            $country = Country::create([
+                'name' => $countryName
+            ]);
+        }
+
+        $product->country_id = $country->id;
+        $product->save();
+    }
+
+    /**
+     * Map origin
+     * @param  Product $product
+     * @param  string  $originName
+     * @return void
+     */
+    private function mapOrigin(Product $product, $originName)
+    {
+        $originName = trim($originName);
+
+        if (empty($originName)) {
+            return;
+        }
+
+        $origin = Origin::where('name', $originName)->first();
+
+        if (empty($country)) {
+            $origin = Origin::create([
+                'name' => $originName
+            ]);
+        }
+
+        $product->origin_id = $origin->id;
+        $product->save();
     }
 
     /**
