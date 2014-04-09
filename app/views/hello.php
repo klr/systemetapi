@@ -21,7 +21,7 @@
            left: 50%;
            top: 50%;
            margin-left: -150px;
-           margin-top: -150px;
+           margin-top: -200px;
         }
 
         a, a:visited {
@@ -55,7 +55,10 @@
 
         <p>Systemet API är ett simpelt och öppet API för att hämta information från Systembolaget.</p>
 
-        <p><a href="https://www.mashape.com/karlroos/systemet" target="_blank">Dokumentation finns på Mashape.</a></p>
+        <p>
+            <a href="https://www.mashape.com/karlroos/systemet" target="_blank">Dokumentation finns på Mashape.</a><br>
+            <a href="https://github.com/klr/systemetapi" target="_blank">Källkod finns på GitHub.</a>
+        </p>
 
         <p>Vi reserverar oss för att när som helst plocka ner API:et, förändra struktur och begränsa tillgången till det.</p>
 
