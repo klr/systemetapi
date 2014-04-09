@@ -18,7 +18,7 @@ class ProductController extends BaseController
 
         // Order by
         if ($orderBy = Input::get('order_by')) {
-            $acceptedOrderBy = ['name', 'price', 'price_per_liter', 'alcohol', 'apk'];
+            $acceptedOrderBy = ['name', 'start_date', 'price', 'price_per_liter', 'alcohol', 'apk'];
 
             if (!in_array($orderBy, $acceptedOrderBy)) {
                 throw new InvalidArgumentException('You can not sort by ' . $orderBy . '. Accepted values are: ' . implode(', ', $acceptedOrderBy));
@@ -57,6 +57,10 @@ class ProductController extends BaseController
         // Year range
         $product = $product->where('year', '>', Input::get('year_from', -1))
             ->where('year', '<', Input::get('year_to', 3000));
+
+        // Start at range
+        $product = $product->where('start_date', '>', Input::get('start_date_from', '1900-01-01'))
+            ->where('start_date', '<', Input::get('start_date_to', '2050-01-01'));
 
         // Tag
         if ($tags = Input::get('tag')) {

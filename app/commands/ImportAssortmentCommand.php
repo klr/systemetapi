@@ -39,11 +39,15 @@ class ImportAssortmentCommand extends Command {
     {
         ini_set('memory_limit', '512M');
 
+        $this->info('Loading XML...');
+
         if (App::environment() == 'development') {
             $xml = simplexml_load_file('Alla+Artiklar.xml');
         } else {
             $xml = simplexml_load_file('http://www.systembolaget.se/Assortment.aspx?Format=Xml');
         }
+
+        $this->info('XML loaded');
 
         $numProducts = 0;
 
@@ -55,6 +59,7 @@ class ImportAssortmentCommand extends Command {
                 'article_id'      => $row->Artikelid,
                 'name'            => $row->Namn,
                 'name_2'          => $row->Namn2,
+                'start_date'      => $row->Saljstart,
                 'volume'          => $row->Volymiml / 1000,
                 'price'           => $row->Prisinklmoms,
                 'price_per_liter' => $row->PrisPerLiter,
