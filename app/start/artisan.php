@@ -12,3 +12,4 @@
 */
 
 Artisan::add(new ImportAssortmentCommand);
+Artisan::add(new ImportStoreCommand);

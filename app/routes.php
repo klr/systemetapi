@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
+Route::get('/', function() {
+    return View::make('hello');
 });
 
 /**
@@ -34,6 +33,7 @@ Route::resource('product', 'ProductController');
 Route::resource('tag', 'TagController');
 Route::resource('country', 'CountryController');
 Route::resource('origin', 'OriginController');
+Route::resource('store', 'StoreController');
 
 /**
  * Route models
@@ -42,3 +42,4 @@ Route::model('product', 'Product');
 Route::model('tag', 'Tag');
 Route::model('country', 'Country');
 Route::model('origin', 'Origin');
+Route::model('store', 'Store');
